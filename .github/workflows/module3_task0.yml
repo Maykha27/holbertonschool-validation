@@ -1,15 +1,17 @@
 name: module3_task0
-run-name: ${{ github.actor }} is learning GitHub Actions
-on: [push]
-  pull-request: 
-    branches: main
-  push:
-    branches-ignore: main
-    
+on:
+  push:
+    branches:
+      - main
+  schedule:
+    - cron: "0 0 * * *"
 jobs:
-  check-bats-version:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Clone Repository
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3 
+  module3_task0:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: cd in to correct directory
+        run: |
+          cd module3_task0
+          make help
