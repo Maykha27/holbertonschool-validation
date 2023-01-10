@@ -1,13 +1,41 @@
-build: ## construlle una pagina estatica con hugo y la guarda en dist
-	hugo -D > /dev/null 2>&1
+# Variable defination
+Publish=hugo
+SHELLCHECK=shellcheck
 
-.PHONY: clean
-clean: ## elimina el directorio dist dentro de module1...
-	rm -rf ./dist/ > /dev/null 2>&1
+build: ## Builds a new website
+	$(Publish)
 
-post: ## crea un nuevo post en la carpeta que esta configurada en config.toml acepta dos argumentos el nombre del archivo .md (POST_NAME sin la extension) y el titulo del post (POST_TITLE)
-	hugo new posts/$(POST_NAME).md
-	echo '---\ntitle: "$(POST_TITLE)"\ndate: 2021-09-14T13:42:07-03:00\ndraft: false\n---' > ./content/posts/$(POST_NAME).md
+clean: ## Remove all files from folder dist
+	rm -r dist/*
 
-help: ## da una breve descripcion de todos los comandos
-	grep '##' ./Makefile  | sed 's/ ##/ /' |  head -n -1
+post: ## Create new post and using the sed command to modify the contents of a file.
+	$(Publish) new posts/$(POST_NAME).md
+	sed -i 's/title: .*/title: "$(POST_TITLE)"/' content/posts/$(POST_NAME).md
+
+lint: ## shellcheck setup
+	markdownlint README.md
+	markdownlint DEPLOY.md
+	$(SHELLCHECK) setup.sh >/dev/null 2>&1 || echo "Lint Failed"
+
+markdownlint: ## updated to lint the files README.md and DEPLOY.md
+	markdownlint README.md
+	markdownlint DEPLOY.md
+
+integration-tests: ## server and check the localhost
+	hugo
+	ls dist/
+
+unit-tests: ## Runs different makefile recipes
+	make POST_TITLE='TEST' POST_NAME='this-is-a-test' post
+	make build
+	make clean
+
+validate: ## Tests dir
+	pwd
+
+package: ## creates archive
+	make build
+	zip awesome-website.zip dist/
+
+help: ## Display the list of targets and their usage.
+	cat Makefile | grep '##' | tr -d '##' | head -n -1
