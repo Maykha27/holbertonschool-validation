@@ -12,11 +12,20 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      - name: cd in to correct directory
+      - name: Install tools
         run: |
           cd module3_task1
-          make help
-      -name: cp in to directory
-       run:
-         cp module3_task1
-         make help
+          chmod u+x setup.sh
+          sudo ./setup.sh
+      - name: build
+        run: |
+          cd module3_task1/
+          make build
+      - name: post
+        run: |
+          cd module3_task1/
+          make POST_TITLE="Test" POST_NAME="name" post
+      - name: clean
+        run: |
+          cd module3_task1/
+          make clean
