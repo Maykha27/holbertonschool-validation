@@ -23,5 +23,3 @@ to unarchive it in your current directory
 
 - Run  the command `hugo server` to verify that the go hugo website is running currectly.
 - Then check it out on local host [http://localhost:1313/]
-
-
