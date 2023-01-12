@@ -3,7 +3,7 @@ Publish=hugo
 SHELLCHECK=shellcheck
 
 build: ## Builds a new website
-
+	hugo -D > /dev/null 2>&1
 
 clean: ## Remove all files from folder dist
 	rm -r dist/*
