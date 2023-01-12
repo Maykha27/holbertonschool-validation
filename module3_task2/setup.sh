@@ -1,6 +1,7 @@
 #!/bin/bash
-apt-get update && apt-get install -y wget make
-wget https://github.com/gohugoio/hugo/releases/download/v0.88.1/hugo_0.88.1_Linux-64bit.deb
-dpkg -i hugo_0.88.1_Linux-64bit.deb
-rm hugo_0.88.1_Linux-64bit.deb
-make build
+apt-get update && apt-get install -y hugo make
+apt-get install curl -y
+curl -Lo install_hugo.deb https://github.com/gohugoio/hugo/releases/download/v0.109.0/hugo_extended_0.109.0_linux-amd64.deb
+apt-get install ./install_hugo.deb
+npm install -g markdownlint-cli
+rm ./install_hugo.deb
