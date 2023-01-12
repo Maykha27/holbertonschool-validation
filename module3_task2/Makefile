@@ -3,7 +3,7 @@ Publish=hugo
 SHELLCHECK=shellcheck
 
 build: ## Builds a new website
-	hugo -D > /dev/null 2>&1
+
 
 clean: ## Remove all files from folder dist
 	rm -r dist/*
@@ -15,7 +15,7 @@ post: ## Create new post and using the sed command to modify the contents of a f
 lint: ## shellcheck setup
 	markdownlint README.md
 	markdownlint DEPLOY.md
-	$(SHELLCHECK) setup.sh >/dev/null 2>&1 || echo "Lint Failed"
+	yamllint "$(SHELLCHECK)" setup.sh >/dev/null 2>&1 || echo "Lint Failed"
 
 markdownlint: ## updated to lint the files README.md and DEPLOY.md
 	markdownlint README.md
