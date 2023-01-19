@@ -25,11 +25,13 @@ markdownlint: ## updated to lint the files README.md and DEPLOY.md
 integration-tests: ## server and check the localhost
 	hugo
 	ls dist/
+	make unit-tests
 
 unit-tests: ## Runs different makefile recipes
 	make POST_TITLE='TEST' POST_NAME='this-is-a-test' post
 	make build
 	make clean
+	make unit-tests
 
 validate: ## Tests dir
 	pwd
