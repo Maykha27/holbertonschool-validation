@@ -30,7 +30,6 @@ unit-tests: ## Runs different makefile recipes
 	make POST_TITLE='TEST' POST_NAME='this-is-a-test' post
 	make build
 	make clean
-	make unit-tests
 
 validate: ## Tests dir
 	pwd
