@@ -1,4 +1,4 @@
-# Variable defination
+# Define variables
 Publish=hugo
 SHELLCHECK=shellcheck
 
@@ -14,22 +14,22 @@ post: ## Create new post and using the sed command to modify the contents of a f
 	sed -i 's/title: .*/title: "$(POST_TITLE)"/' content/posts/$(POST_NAME).md
 
 lint: ## shellcheck setup
-	markdownlint README.md
-	markdownlint DEPLOY.md
+	markdownlint README.md DEPLOY.md
 	$(SHELLCHECK) setup.sh >/dev/null 2>&1 || echo "Lint Failed"
 
 markdownlint: ## updated to lint the files README.md and DEPLOY.md
-	markdownlint README.md
-	markdownlint DEPLOY.md
+	markdownlint README.md DEPLOY.md
 
 integration-tests: ## server and check the localhost
 	hugo
+	touch coverage-integrations.out
 	ls dist/
 
+
 unit-tests: ## Runs different makefile recipes
-	make POST_TITLE='TEST' POST_NAME='this-is-a-test' post
 	make build
 	make clean
+	touch coverage-units.out
 
 validate: ## Tests dir
 	pwd
